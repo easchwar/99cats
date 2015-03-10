@@ -27,8 +27,8 @@ class CatRentalRequest < ActiveRecord::Base
   end
 
   def end_date_after_start_date
-    if start_date > end_date
-      errors[:start_date] << "can't be after end date"
+    unless start_date.blank? || end_date.blank?
+      errors[:start_date] << "can't be after end date" if start_date > end_date
     end
   end
 

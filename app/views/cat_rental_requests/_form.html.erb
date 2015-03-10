@@ -1,0 +1,28 @@
+<% url = cat_request.persisted? ? cat_rental_request_url(cat_request) : cat_rental_requests_url %>
+
+<form action="<%= url %>" method="POST">
+  <% if cat_request.persisted? %>
+    <input type="hidden" name="_method" value='PATCH'>
+  <% end %>
+
+  <label>Cat
+    <select name="cat_rental_request[cat_id]" value="">
+      <% cats.each do |cat| %>
+        <option <%= "selected" if cat_request.cat_id == cat.id %> value="<%= cat.id %>">
+          <%= cat.name %>
+        </option>
+      <% end %>
+    </select>
+  </label>
+  <br>
+
+  <label>Start Date
+    <input type="date" name="cat_rental_request[start_date]" value="<%= cat_request.start_date %>">
+  </label>
+  <br>
+  <label>End Date
+    <input type="date" name="cat_rental_request[end_date]" value="<%= cat_request.end_date %>">
+  </label>
+  <br>
+  <input type="submit" value="Submit!">
+</form>
