@@ -1,0 +1,11 @@
+<h1> <%= @cat.name %> </h1>
+<table>
+  <th>birth date</th><th>color</th><th>sex</th><th>description</th>
+  <tr>
+    <td> <%= @cat.birth_date %> </td>
+    <td> <%= @cat.color %> </td>
+    <td> <%= @cat.sex %> </td>
+    <td> <%= @cat.description %> </td>
+  </tr>
+</table>
+<%= link_to 'Cats index', cats_url %>

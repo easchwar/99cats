@@ -1,0 +1,42 @@
+<% flash[:errors] && flash[:errors].each do |error| %>
+  <div><%= error %></div>
+<% end %>
+
+<% url = cat.persisted? ? cat_url(cat) : cats_url %>
+
+<form action="<%= url %>" method="POST">
+  <% if cat.persisted? %>
+    <input type="hidden" name="_method" value='PATCH'>
+  <% end %>
+
+  <label>Name
+    <input type="text" name="cat[name]" value="<%= cat.name %>" >
+  </label>
+  <br>
+  <label>Color
+    <select name="cat[color]" value="">
+      <% Cat::COLORS.each do |color| %>
+        <option <%= "selected" if cat.color == color %> value="<%= color %>">
+          <%= color.camelcase %>
+        </option>
+      <% end %>
+    </select>
+  </label>
+  <br>
+  <label>Male
+    <input type="radio" name="cat[sex]" value="M" <%= "checked" if cat.sex == "M" %> >
+  </label>
+  <label>Female
+    <input type="radio" name="cat[sex]" value="F" <%= "checked" if cat.sex == "F" %> >
+  </label>
+  <br>
+  <label>Description
+    <textarea name="cat[description]"><%= cat.description %></textarea>
+  </label>
+  <br>
+  <label>Birth Date
+    <input type="date" name="cat[birth_date]" value="<%= cat.birth_date %>">
+  </label>
+  <br>
+  <input type="submit" value="Submit!">
+</form>
