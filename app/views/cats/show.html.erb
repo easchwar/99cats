@@ -8,4 +8,17 @@
     <td> <%= @cat.description %> </td>
   </tr>
 </table>
+<br>
+<h2>Requests</h2>
+<table>
+  <th>Start Date</th><th>End Date</th><th>Status</th>
+  <% @cat.requests.order(:start_date).each do |request| %>
+    <tr>
+      <td> <%= request.start_date %> </td>
+      <td> <%= request.end_date %> </td>
+      <td> <%= request.status %> </td>
+    </tr>
+  <% end %>
+</table>
+<br>
 <%= link_to 'Cats index', cats_url %>
