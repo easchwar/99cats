@@ -32,7 +32,11 @@ class CatRentalRequest < ActiveRecord::Base
     self.update(status: 'DENIED')
   end
 
-  # private
+  def pending?
+    self.status == 'PENDING'
+  end
+
+  private
 
   def set_request_to_pending
     self.status ||= 'PENDING'

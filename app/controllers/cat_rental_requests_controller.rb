@@ -1,10 +1,14 @@
 class CatRentalRequestsController < ApplicationController
-  def index
-
+  def approve
+    @cat_rental_request = CatRentalRequest.find(params[:id])
+      p approve_rental_url(@cat_rental_request.id)
+    @cat_rental_request.approve!
+    redirect_to cat_url(@cat_rental_request.cat_id)
   end
-
-  def show
-
+  def deny
+    @cat_rental_request = CatRentalRequest.find(params[:id])
+    @cat_rental_request.deny!
+    redirect_to cat_url(@cat_rental_request.cat_id)
   end
 
   def new
@@ -23,11 +27,6 @@ class CatRentalRequestsController < ApplicationController
       flash.now[:errors] = @cat_rental_request.errors.full_messages
       render :new
     end
-  end
-
-  def edit
-    @cat_rental_request = CatRentalRequest.find(params[:id])
-    render :edit
   end
 
   private

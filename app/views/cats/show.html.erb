@@ -17,6 +17,10 @@
       <td> <%= request.start_date %> </td>
       <td> <%= request.end_date %> </td>
       <td> <%= request.status %> </td>
+      <% if request.pending? %>
+        <td> <%= button_to 'Approve Rental', approve_rental_url(request.id), method: :patch %></td>
+        <td> <%= button_to 'Deny Rental', deny_rental_url(request.id), method: :patch %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
