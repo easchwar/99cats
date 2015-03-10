@@ -19,6 +19,8 @@ class Cat < ActiveRecord::Base
   validates :sex, inclusion: { in: %w(M F) }
   validates :color, inclusion: { in: COLORS }
 
+  has_many :requests, class_name: 'CatRentalRequest', dependent: :destroy
+
   def age
     Date.today.year - birth_date.year
   end
