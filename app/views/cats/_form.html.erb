@@ -1,14 +1,12 @@
-<% flash[:errors] && flash[:errors].each do |error| %>
-  <div><%= error %></div>
-<% end %>
-
 <% url = cat.persisted? ? cat_url(cat) : cats_url %>
 
 <form action="<%= url %>" method="POST">
   <% if cat.persisted? %>
     <input type="hidden" name="_method" value='PATCH'>
   <% end %>
-
+  <input type="hidden"
+          name="authenticity_token"
+          value="<%= form_authenticity_token %>">
   <label>Name
     <input type="text" name="cat[name]" value="<%= cat.name %>" >
   </label>

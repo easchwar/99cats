@@ -1,7 +1,3 @@
 <h1>New Cat Rental Request</h1>
 
-<% flash[:errors] && flash[:errors].each do |error| %>
-  <div><%= error %></div>
-<% end %>
-
 <%= render 'form', cat_request: @cat_rental_request, cats: @cats %>
