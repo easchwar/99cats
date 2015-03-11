@@ -1,5 +1,6 @@
 class CatRentalRequestsController < ApplicationController
   before_action :owns_cat, only: [:approve, :deny]
+  before_action :logged_in, only: [:new, :create]
 
   def approve
     @cat_rental_request.approve!
@@ -19,7 +20,8 @@ class CatRentalRequestsController < ApplicationController
 
   def create
     @cats = Cat.all
-    @cat_rental_request = CatRentalRequest.new(cat_request_params)
+
+    @cat_rental_request = current_user.cat_rental_requests.new(cat_request_params)
 
     if @cat_rental_request.save
       redirect_to cat_url(@cat_rental_request.cat_id)
@@ -40,6 +42,12 @@ class CatRentalRequestsController < ApplicationController
     unless current_user == @cat_rental_request.cat.owner
       flash[:errors] = ["Hey man, that's not your cat..."]
       redirect_to cat_url(@cat_rental_request.cat)
+    end
+  end
+
+  def logged_in
+    unless current_user
+      redirect_to new_session_url
     end
   end
 end

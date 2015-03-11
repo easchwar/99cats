@@ -2,7 +2,10 @@ class CatsController < ApplicationController
   before_action :owns_cat, only: [:edit, :update]
 
   def index
-    @cats = Cat.all
+    @cats = Cat.select('cats.*, COUNT(crr.*)')
+            .joins('LEFT OUTER JOIN cat_rental_requests AS crr ON crr.cat_id = cats.id')
+            .group('cats.id')
+            .order('COUNT(crr.*) DESC')
     render :index
   end
 

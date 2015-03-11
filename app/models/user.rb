@@ -19,7 +19,8 @@ class User < ActiveRecord::Base
 
   after_initialize :set_session_token
 
-  has_many :cats
+  has_many :cats, dependent: :destroy
+  has_many :cat_rental_requests, dependent: :destroy
 
   def self.find_by_credentials(user_name, password)
     @user = User.find_by_user_name(user_name)

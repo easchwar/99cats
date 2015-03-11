@@ -18,13 +18,14 @@
 <div class='container-fluid'>
 <table class='table' align-content='center' style='width: 50%;'>
   <thead>
-    <th>Start Date</th><th>End Date</th><th>Status</th>
+    <th>Start Date</th><th>End Date</th><th>Requestor</th><th>Status</th>
   </thead>
   <tbody>
-    <% @cat.requests.order(:start_date).each do |request| %>
+    <% @cat.requests.order(:start_date).order(:end_date).each do |request| %>
       <tr>
-        <td style='width: 30%;'> <%= request.start_date %> </td>
-        <td style='width: 30%;'> <%= request.end_date %> </td>
+        <td style='width: 20%;'> <%= request.start_date %> </td>
+        <td style='width: 20%;'> <%= request.end_date %> </td>
+        <td style='width: 20%;'> <%= request.requestor.user_name %> </td>
         <td style='width: 20%;'> <%= request.status %> </td>
         <td style='width: 10%;'>
           <%= button_to 'Approve', approve_rental_url(request.id), method: :patch, class: 'btn btn-xs btn-primary' if request.pending? && current_user == @cat.owner %>

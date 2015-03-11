@@ -9,16 +9,18 @@
 #  status     :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :integer          default("0"), not null
 #
 
 class CatRentalRequest < ActiveRecord::Base
-  validates :cat_id, :start_date, :end_date, :status, presence: true
+  validates :cat_id, :start_date, :end_date, :status, :user_id, presence: true
   validate :end_date_after_start_date
   validate :no_overlapping_approved_requests
 
   after_initialize :set_request_to_pending
 
   belongs_to :cat
+  belongs_to :requestor, class_name: :User, foreign_key: :user_id
 
   def approve!
     CatRentalRequest.transaction do
