@@ -73,5 +73,4 @@ class CatRentalRequest < ActiveRecord::Base
       errors[:base] << 'There are overlapping approved requests'
     end
   end
-
 end

@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
 
   after_initialize :set_session_token
 
+  has_many :cats
+
   def self.find_by_credentials(user_name, password)
     @user = User.find_by_user_name(user_name)
     if @user

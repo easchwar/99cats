@@ -1,12 +1,12 @@
 class CatRentalRequestsController < ApplicationController
+  before_action :owns_cat, only: [:approve, :deny]
+
   def approve
-    @cat_rental_request = CatRentalRequest.find(params[:id])
-      p approve_rental_url(@cat_rental_request.id)
     @cat_rental_request.approve!
     redirect_to cat_url(@cat_rental_request.cat_id)
   end
+
   def deny
-    @cat_rental_request = CatRentalRequest.find(params[:id])
     @cat_rental_request.deny!
     redirect_to cat_url(@cat_rental_request.cat_id)
   end
@@ -33,5 +33,13 @@ class CatRentalRequestsController < ApplicationController
 
   def cat_request_params
     params.require(:cat_rental_request).permit(:cat_id, :start_date, :end_date)
+  end
+
+  def owns_cat
+    @cat_rental_request = CatRentalRequest.find(params[:id])
+    unless current_user == @cat_rental_request.cat.owner
+      flash[:errors] = ["Hey man, that's not your cat..."]
+      redirect_to cat_url(@cat_rental_request.cat)
+    end
   end
 end

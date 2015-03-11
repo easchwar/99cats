@@ -10,6 +10,7 @@
 #  description :text
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  user_id     :integer          default("0"), not null
 #
 
 class Cat < ActiveRecord::Base
@@ -19,6 +20,7 @@ class Cat < ActiveRecord::Base
   validates :sex, inclusion: { in: %w(M F) }
   validates :color, inclusion: { in: COLORS }
 
+  belongs_to :owner, class_name: 'User', foreign_key: :user_id
   has_many :requests, class_name: 'CatRentalRequest', dependent: :destroy
 
   def age
