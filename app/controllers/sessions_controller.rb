@@ -18,17 +18,29 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    @user = User.find_by_session_token(session[:session_token])
+    @session = Session.find_by_session_token(session[:session_token])
+    @session.destroy
     session[:session_token] = nil
-    @user.reset_session_token!
+
     redirect_to new_session_url
+  end
+
+
+  def login_user!
+    token = Session.generate_session_token
+    @session = @user.sessions.new(session_token: token)
+    if @session.save
+      session[:session_token] = @session.session_token
+    else
+      flash[:errors] = ["something is really, really wrong"]
+    end
   end
 
   private
 
   def logged_in
-    @user = User.find_by_session_token(session[:session_token])
-    if @user
+    @session = Session.find_by_session_token(session[:session_token])
+    if @session
       redirect_to cats_url
     end
   end
