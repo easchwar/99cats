@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   patch 'cat_rental_requests/:id/deny' => 'cat_rental_requests#deny', as: 'deny_rental'
 
   resources :users, only: [:new, :create]
-  resource :session, only: [:new, :create, :destroy]
+  resources :sessions, only: [:new, :create, :destroy, :index]
 end

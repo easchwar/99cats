@@ -17,7 +17,7 @@
         <%= current_user.user_name %>
       </div>
       <div class="navbar-right">
-        <%= button_to 'Logout', session_url, method: :delete, class: 'btn btn-lg btn-danger' %>
+        <%= button_to 'Logout', session_url(current_session), method: :delete, class: 'btn btn-lg btn-danger' %>
       </div>
     </div>
   </nav>

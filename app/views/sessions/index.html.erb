@@ -1,0 +1,12 @@
+<h1>All Sessions</h1>
+<table>
+  <th>Session ID</th>
+  <% @sessions.each do |session| %>
+    <tr>
+      <td><%= session.id %></td>
+      <td>
+        <%= button_to 'End Session', session_url(session.id), method: :delete, class: 'btn btn-xs btn-danger'  %>
+      </td>
+    </tr>
+  <% end %>
+</ul>

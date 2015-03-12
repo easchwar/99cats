@@ -1,5 +1,11 @@
 class SessionsController < ApplicationController
-  before_action :logged_in, only: [:new, :create]
+  before_action :ensure_not_logged_in, only: [:new, :create]
+  before_action :ensure_logged_in, only: [:index]
+
+  def index
+    @sessions = Session.where(user_id: current_user.id)
+    render :index
+  end
 
   def new
     @user = User.new
@@ -18,9 +24,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    @session = Session.find_by_session_token(session[:session_token])
+    @session = Session.find(params[:id])
     @session.destroy
-    session[:session_token] = nil
 
     redirect_to new_session_url
   end
@@ -38,10 +43,17 @@ class SessionsController < ApplicationController
 
   private
 
-  def logged_in
+  def ensure_not_logged_in
     @session = Session.find_by_session_token(session[:session_token])
     if @session
       redirect_to cats_url
+    end
+  end
+
+  def ensure_logged_in
+    @session = Session.find_by_session_token(session[:session_token])
+    unless @session
+      redirect_to new_session_url
     end
   end
 end
