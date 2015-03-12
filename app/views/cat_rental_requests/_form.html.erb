@@ -10,7 +10,7 @@
   <label>Cat
     <select name="cat_rental_request[cat_id]" value="">
       <% cats.each do |cat| %>
-        <option <%= "selected" if cat_request.cat_id == cat.id %> value="<%= cat.id %>">
+        <option <%= "selected" if (cat_request.cat_id == cat.id) || cat.id.to_s == params[:id] %> value="<%= cat.id %>">
           <%= cat.name %>
         </option>
       <% end %>

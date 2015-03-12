@@ -13,6 +13,7 @@
     <td class='text-center' style='border-style: solid; border-width: thin;'> <%= @cat.description %> </td>
   </tr>
 </table>
+<%= link_to 'Rent me!', new_cat_rental_request_url({id: @cat.id}), class: "btn btn-primary", role: "button" %>
 <br>
 <h2>Requests</h2>
 <div class='container-fluid'>
@@ -39,4 +40,4 @@
 </table>
 </div>
 <br>
-<div class='container-fluid'><%= button_to 'Cats index', cats_url, method: :get, class: 'btn btn-primary' %></div>
+<div class='container-fluid'><%= link_to 'Cats index', cats_url, class: 'btn btn-primary', role: "button" %></div>
